@@ -1,0 +1,66 @@
+doctype html
+html
+head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js')
+    link(rel='stylesheet' href='https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css')
+    script(src='https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js')
+
+    script.
+        $(document).ready(function () {
+                $("#users_display").DataTable({
+                    columnDefs: [
+                        {
+                            searchable: false,
+                            targets: 2,
+                            pageLength: 10,
+                        },
+                    ],
+                });
+
+            });
+
+            function onSubmit(event) {
+                event.preventDefault();
+                let id = Math.floor(Math.random() * 100);
+                let firstName = document.querySelector("#firstName").value;
+                let lastName = document.querySelector("#lastName").value;
+                let emailAddress = document.querySelector("#emailAddress")
+                    .value;
+                let imageUrl = `https://reqres.in/img/faces/${Math.ceil(
+                    Math.random() * 10
+                )}-image.jpg`;
+                $("#tbody").prepend(
+                    `
+                        <tr>
+                            <td>${id}</td>
+                            <td>${emailAddress}</td>
+                            <td class="caps">${firstName}</td>
+                            <td class="caps">${lastName}</td>
+                            <td><img src="${imageUrl}"/></td>
+                        </tr>
+                    `
+                );
+            }
+
+    body
+    block content
+
+    form(onsubmit='onSubmit(event)')
+        fieldset
+            label(for='firstName')
+                | First Name:
+                input#firstName(type='text' name='firstName' placeholder='First Name' required='')
+            br
+
+            label(for='lastName')
+                | Last Name:
+                input#lastName(type='text' name='lastName' placeholder='Last Name' required='')
+            br
+            label(for='emailAddress')
+                | Email:
+                input#emailAddress(type='email' name='emailAddress' placeholder='Email' required='')
+            br
+            
+            input#submitQuery(type='submit' value='Submit')

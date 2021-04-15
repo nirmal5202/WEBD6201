@@ -1,0 +1,24 @@
+extends layout
+
+mixin row(user)
+    tr
+        td= user.id
+        td= user.email
+        td= user.first_name
+        td= user.last_name
+        td
+            img(src=user.avatar)
+
+block content
+    h1 Users
+    table#users_display
+        thead
+            tr
+                th ID
+                th Email
+                th First Name
+                th Last Name
+                th Avatar
+        tbody
+            for user in data
+                +row(user)
